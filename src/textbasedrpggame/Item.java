@@ -15,10 +15,12 @@ package textbasedrpggame;
 public abstract class Item {
     public String name;
     public String description;
+    public String IconPath;
 
     // Constructor
-    public Item(String name, String description) {
+    public Item(String name, String description, String IconPath) {
         this.name = name;
+        this.IconPath = IconPath;
         this.description = description;
     }
 
@@ -31,6 +33,21 @@ public abstract class Item {
    
     public String getName() {
         return name;
+    }
+    
+    public String getItemType(Item item) {
+    if (item instanceof Weapon) {
+        return "Weapon";
+    } else if (item instanceof Armour) {
+        return "Armour";
+    } else if (item instanceof HealthPotion) {
+        return "HealthPotion";
+    }
+    return "Unknown"; // Default case
+}
+    
+     public String getIconPath() {
+        return IconPath; // Return the image path
     }
     
     // Abstract method to be implemented by subclasses
@@ -46,4 +63,7 @@ public abstract class Item {
     public String toString() {
         return this.name + ": " + this.description;
     }
+
+    public abstract int getStat(); // Abstract method to get stats for items
+ 
 }

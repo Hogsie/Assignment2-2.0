@@ -12,8 +12,8 @@ public class HealthPotion extends Item {
     private int healingAmount;
 
     // Constructor 
-    public HealthPotion(String name, String description, int healingAmount) {
-        super(name, description);
+    public HealthPotion(String name, String description, String IconPath, int healingAmount) {
+        super(name, description, IconPath);
         this.healingAmount = healingAmount;
     }
 
@@ -30,7 +30,7 @@ public class HealthPotion extends Item {
        
     int newHealth = player.getHealth() + healingAmount;
     //max health 100
-    if (newHealth > 100) {
+    if (newHealth > 2000) {
         newHealth = 100;
     }
     player.setHealth(newHealth);
@@ -47,5 +47,10 @@ public class HealthPotion extends Item {
     @Override
     public String toString() {
         return super.toString() + " (Heals " + healingAmount + " HP)";
+    }
+    
+    @Override
+    public int getStat() {
+        return healingAmount; // Return defense for armour
     }
 }

@@ -14,8 +14,8 @@ public class Armour extends Item {
     private int defense;
 
     // Constructor for Armour
-    public Armour(String name, String description, int defense) {
-        super(name, description);  
+    public Armour(String name, String description, String IconPath, int defense) {
+        super(name, description, IconPath);  
         this.defense = defense;
     }
 
@@ -45,5 +45,10 @@ public class Armour extends Item {
     @Override
     public String toString() {
         return super.toString() + ", Defense: " + defense;
+    }
+    
+    @Override
+    public int getStat() {
+        return defense; // Return defense for armour
     }
 }

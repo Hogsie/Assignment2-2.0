@@ -1,41 +1,37 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package textbasedrpggame;
-
-
-
 
 public class Weapon extends Item {
     private int damage;
 
     // Constructor 
-    public Weapon(String name, String description, int damage) {
-        super(name, description);
+    public Weapon(String name, String description, String iconPath, int damage) {
+        super(name, description, iconPath); // Make sure Item class has an iconPath
         this.damage = damage;
     }
 
-    // gets and sets
+    // Getters and setters
     public int getDamage() {
         return damage;
     }
     
-    public String getDesciption(){
-        return description;
+    public String getDescription() { // Corrected method name
+        return description; // Make sure 'description' is declared in Item
     }
 
-   
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    //add bonus attack
+    // Apply the weapon effect
     @Override
     public void apply(Player player) {
-        // Increase player's attack strength
         player.setStrength(player.getStrength() + damage);
         System.out.println("Equipped " + getName() + ". Increased attack strength by " + damage + ".");
+    }
+    
+    @Override
+    public int getStat() {
+        return damage; // Return defense for armour
     }
     
     @Override

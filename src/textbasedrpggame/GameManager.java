@@ -17,116 +17,38 @@ import java.util.ArrayList;
 
 import java.util.Random;
     public class GameManager {
-    private Player player;
+    public Player player;
     private Inventory inventory;
     private Scanner scanner;
     private Random random;
+ 
+    private String playerName;
 
-
+      // Constructor accepting OutputHandler
     public GameManager() {
         this.inventory = new Inventory();
+       
         this.scanner = new Scanner(System.in);
         this.random = new Random(); 
     }
-    
-   
-
-    
-    
-
-   public void startNewGame() {
-    System.out.print("Enter your character's name: ");
-    String playerName = scanner.nextLine();
-    player = new Player(playerName, 100, 10, 5);
-   
-    System.out.println("Welcome, " + player.getName() + "! You awake in an unknown location...");
-   
-    // Prompt the player to type "ready" to begin combat
-    System.out.println("A level 1 zombie approaches. Type 'ready' to begin combat.");
-    String input = scanner.nextLine().toLowerCase();
-
-    if (input.equals("ready")) {
-        encounterBeginnerEnemy();
-    } else {
-        System.out.println("You hesitated! The zombie attacks!");
-        encounterBeginnerEnemy();
-    }
-
-    System.out.println("You search the body...");
-    System.out.println("Type 'search' to find something valuable.");
-    String key = scanner.nextLine().toLowerCase();
-
-    if (key.equals("search")) {
-        // Simulate finding the health potion
-        HealthPotion healthPotion = new HealthPotion("Small Health Potion", "Restores 20 HP.", 20);
-        player.getInventory().addItem(healthPotion);
-        System.out.println("You found a Small Health Potion!");
-    } else {
-        // Concussion scenario
-        System.out.println("You suffered a concussion and failed to search properly.");
-        System.out.println("The search was unsuccessful, and you found nothing.");
-    }
-
-    waitForNext(); 
-    runGame(); 
-}
-
-    
-   public void runGame() {
-    boolean gameRunning = true;
-    while (gameRunning) {
-        showOptions();
-        String action = scanner.nextLine().toLowerCase();
-
-        switch (action) {
-            case "inv":
-                handleInventory();
-                break;
-            case "stats":
-                //System.out.println(player);
-                player.printStats();
-                break;
-            case "explore":
-                triggerRandomEvent();
-                break;
-            case "help":
-                showHelp();
-                break;
-            case "save":
-                try {
-                    saveGame("player_data");
-                } catch (IOException e) {
-                    System.out.println("An error occurred while saving the game.");
-                    e.printStackTrace();
-                }
-                break;
-            case "quit":
-                gameRunning = false;
-                System.out.println("Returning to menu");
-                break;
-            case "cheat":
-                HealthPotion largePotion = new HealthPotion("Large Health Potion", "Restores a large amount of health.", 1000);
-                player.getInventory().addItem(largePotion);
-                break;
-            case "cheat2":
-                player.getInventory().addItem(new Weapon("Rusty Sword", "A rusty old sword.", 5));
-                player.getInventory().addItem(new Armour("Basic Armour", "Some basic protection.", 5));
-                break;
-                
-            case "cheat3":
-               
-
-                     player.getInventory().addItem(new ShinySword());
-                     
-                     break;
-            default:
-                System.out.println("Invalid command.");
-                break;
-        }
-    }
+    public interface OutputHandler {
+    void updateGameOutput(String message);
 }
 
 
+    public void startNewGame(String PlayerName) {
+        
+        player = new Player(PlayerName, 1000, 100, 5); // Create a new Player instance
+        
+        
+    }
+    
+     public Player getPlayer() {
+        return player;
+    }
+
+
+/*
     // saving the player data
     public void saveGame(String filename) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
@@ -157,7 +79,8 @@ import java.util.Random;
         }
         }
     }
-    
+    */
+    /*
     // loads player data
     public void loadGame(String filename) throws IOException {
     System.out.println("check2");
@@ -175,6 +98,7 @@ import java.util.Random;
         for (int i = 0; i < numItems; i++) {
             String itemType = reader.readLine();
             String itemName = reader.readLine();
+            String IconPath 
             Item item = null;
 
             // reverses the save file, reads back the 4 lines of text saved per item, 
@@ -183,7 +107,7 @@ import java.util.Random;
                 case "Weapon":
                     int attackValue = Integer.parseInt(reader.readLine());
                     String weaponDescription = reader.readLine(); 
-                    item = new Weapon(itemName, weaponDescription, attackValue);
+                    item = new Weapon(itemName, weaponDescription, IconPath, attackValue);
                     break;
                 case "Armour":
                     int defenseValue = Integer.parseInt(reader.readLine());
@@ -203,9 +127,10 @@ import java.util.Random;
         }
     }
     
+    
     runGame();
 }
-
+*/
     //options
  private void showOptions() {
     System.out.println("Choose an action:");
@@ -245,20 +170,8 @@ import java.util.Random;
     
    
 
-     private void triggerRandomEvent() {
-        double chance = random.nextDouble();
-        if (chance < 0.3) {
-            encounterEnemy();
-        } else if (chance < 0.6) {
-            searchHouse();
-        } else if (chance < 0.8) {
-            exploreSafeHouse();
-        } else {
-            encounterSurvivor();
-        }
-    }
-
-     
+             
+             
      // fighting begginer enemy, lvl 1 zombie
     private void encounterBeginnerEnemy() {
         Enemy enemy = new Enemy("Level 1 Zombie", 50, 7, 2);
@@ -316,8 +229,15 @@ HealthPotion mediumPotion = new HealthPotion("Medium Health Potion", "Restores a
 // Large Health Potion
 HealthPotion largePotion = new HealthPotion("Large Health Potion", "Restores a large amount of health.", 100);
 
+*
+*
+*
+*
+*
+    CHAT GPT ASSISTED GENERATED SCENARIOS
+*
+*
 */
-// CHATGPT assisted/prompted Generated scenaroios
     private void encounterEnemy() {
     // Randomly select a zombie level between 1 and 10
     int zombieLevel = (int) (Math.random() * 10) + 1;
@@ -334,8 +254,8 @@ HealthPotion largePotion = new HealthPotion("Large Health Potion", "Restores a l
         if (player.isAlive()) {
             // Reward the player based on the zombie's level
             System.out.println("You defeated the Level " + zombieLevel + " Zombie!");
-            player.getInventory().addItem(new Weapon("Rusty Sword", "A rusty old sword.", 5));
-            player.getInventory().addItem(new Armour("Basic Armour", "Some basic protection.", 5 * zombieLevel));
+            player.getInventory().addItem(new Weapon("Rusty Sword", "A rusty old sword.","resources/DullSword.jpg", 5));
+            player.getInventory().addItem(new Armour("Basic Armour", "Some basic protection.", "resources/ShinyArmour.jpg",5 * zombieLevel));
             player.earnCurrency(50 * zombieLevel);
             player.gainExperience(20*zombieLevel);
         } else {
@@ -377,8 +297,8 @@ HealthPotion largePotion = new HealthPotion("Large Health Potion", "Restores a l
                 System.out.println("You defeated the zombie!");
 
                 // Reward player
-                player.getInventory().addItem(new Weapon("Rusty Sword", "A rusty old sword.", 5));
-                player.getInventory().addItem(new Armour("Worn Armour", "A piece of worn armor.", 3));
+                player.getInventory().addItem(new Weapon("Rusty Sword", "A rusty old sword.", "resources/DullSword.jpg", 5));
+                player.getInventory().addItem(new Armour("Worn Armour", "A piece of worn armor.","resources/WornArmour.jpg", 3));
                 int goldReward = 50 * zombieLevel;
                 player.earnCurrency(goldReward);
                 player.gainExperience(100);
@@ -392,7 +312,7 @@ HealthPotion largePotion = new HealthPotion("Large Health Potion", "Restores a l
             System.out.println("You managed to escape from the zombie.");
         }
     } else if (encounterChance < 0.7) {  // 30% chance to loot items
-        Item item = new HealthPotion("Health Potion", "A potion that restores 20 health.",20);
+        Item item = new HealthPotion("Health Potion", "A potion that restores 20 health.","resources/SmallHealthPotion.jpg",20);
         player.getInventory().addItem(item);
         System.out.println("You found a " + item.getName() + "!");
     } else {  // 30% chance to find gold
@@ -438,13 +358,13 @@ private void purchaseItem(String itemName, int price) {
         Item item;
         switch (itemName) {
             case "Small Health Potion":
-                item = new HealthPotion("Small Health Potion", "Restores 20 HP.", 20);
+                item = new HealthPotion("Small Health Potion", "Restores 20 HP.","resources/SmallHealthPotion.jpg", 20);
                 break;
             case "Rusty Sword":
-                item = new Weapon("Rusty Sword", "A rusty old sword.", 5);
+                item = new Weapon("Rusty Sword", "A rusty old sword.","resources/DullSword.jpg",5);
                 break;
             case "Worn Armour":
-                item = new Armour("Worn Armour", "Old, but effective armor.", 5);
+                item = new Armour("Worn Armour", "Old, but effective armor.","resources/WornArmour.jpg", 5);
                 break;
             default:
                 System.out.println("Item not found.");
@@ -500,9 +420,9 @@ private void triggerTrap() {
 private void findLoot() {
     // Define possible loot items
     List<Item> possibleLoot = new ArrayList<>();
-    possibleLoot.add(new HealthPotion("Medium Health Potion", "Restores 50 HP.", 50));
-    possibleLoot.add(new Weapon("Sharp Sword", "A well-made sword with a sharp edge.", 10));
-    possibleLoot.add(new Armour("Shiny Armour", "Provides excellent protection.", 15));
+    possibleLoot.add(new HealthPotion("Medium Health Potion","resources/LargeHealthPotion.jpg", "Restores 50 HP.", 50));
+    possibleLoot.add(new Weapon("Sharp Sword","A well-made sword with a sharp edge.","resources/ShinySword.jpg", 10));
+    possibleLoot.add(new Armour("Shiny Armour", "Provides excellent protection.", "resources/ShinyArmour.jpg",15));
 
     // Randomly select loot
     Random random = new Random();

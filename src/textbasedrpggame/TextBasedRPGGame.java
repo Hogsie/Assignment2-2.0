@@ -13,6 +13,7 @@ public class TextBasedRPGGame {
     /**
      * @param args the command line arguments
      */
+    /*
     public static void main(String[] args) {
       // Create an instance of the MainMenu class
         MainMenu mainMenu = new MainMenu();
@@ -20,5 +21,5 @@ public class TextBasedRPGGame {
         // Display the main menu to the player
         mainMenu.displayMenu();
     }
-    
+    */
 }

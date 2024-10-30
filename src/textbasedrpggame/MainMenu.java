@@ -5,6 +5,7 @@
 package textbasedrpggame;
 import java.io.IOException;
 
+
 /**
  *
  * @author Hayato
@@ -22,7 +23,7 @@ public class MainMenu {
         this.gameManager = new GameManager();
     }
 // main menu
-    
+  /*  
     public void displayMenu() {
         while (true) {
             System.out.println("=== Main Menu ===");
@@ -52,4 +53,5 @@ public class MainMenu {
             }
         }
     }
+*/
 }

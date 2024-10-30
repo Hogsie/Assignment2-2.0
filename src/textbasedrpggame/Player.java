@@ -27,6 +27,15 @@ public class Player extends Character {
         this.xp = 0;
         this.gold = 10; // Starting amount of currency
     }
+    
+    public Armour getEquippedArmour(){
+        return this.equippedArmour;
+    }
+    
+    public Weapon getEquippedWeapon(){
+        return this.equippedWeapon;
+        
+    }
 
      // Gets and sets
     public int getCurrency() {
@@ -36,6 +45,10 @@ public class Player extends Character {
     public String getName(){
         return this.name;
         
+    }
+    
+    public int getXp(){
+        return this.xp;
     }
     
     public Inventory getInventory() {
@@ -175,8 +188,8 @@ public void addItem(Item item) {
         if (inventory.hasItem(potion)) {
             this.health += potion.getHealAmount();
             // max health is 100
-            if (this.health > 100) { 
-                this.health = 100;
+            if (this.health > 10000) { 
+                this.health = 10000;
             }
             inventory.removeItem(potion);
             System.out.println("Used " + potion.getName() + ". Your health is now " + this.health + ".");
